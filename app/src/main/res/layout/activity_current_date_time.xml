@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".CurrentDateTime">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Date "
+        android:layout_weight="1"
+        android:id="@+id/d"
+        android:textSize="75dp"
+        android:gravity="center"/>
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:textSize="50dp"
+        android:hint="Date "
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/t"
+        android:layout_weight="1"
+        android:layout_gravity="bottom"
+        android:textSize="75dp"
+        android:text="Time "/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/tvTime"
+        android:layout_weight="1"
+        android:layout_gravity="bottom"
+        android:textSize="50dp"
+        android:hint="Time "/>
+
+
+</LinearLayout>
