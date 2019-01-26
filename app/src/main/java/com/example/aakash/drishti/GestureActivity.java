@@ -79,7 +79,7 @@ public class GestureActivity extends Activity {
                     {
                         Intent i = new Intent(GestureActivity.this, MainActivity.class);
                         startActivity(i);
-                        finish();
+
                     }
                     else
                     {

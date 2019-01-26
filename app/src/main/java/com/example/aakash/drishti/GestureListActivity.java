@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -32,18 +33,21 @@ public class GestureListActivity extends Activity {
     private GestureAdapter mGestureAdapter;
     private GestureLibrary gLib;
     //private ImageView mMenuItemView;
+    Button btnCancel;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gestures_list);
+        btnCancel=(Button)findViewById(R.id.cancelBtn);
         Log.d(TAG, getApplicationInfo().dataDir);
 
         openOptionsMenu();
 
         mGestureListView = (ListView) findViewById((R.id.gestures_list));
         mGestureList = new ArrayList<GestureHolder>();
+        
         listBanav();
         mGestureAdapter = new GestureAdapter(mGestureList, GestureListActivity.this);
         mGestureListView.setLongClickable(true);
@@ -51,6 +55,7 @@ public class GestureListActivity extends Activity {
 
         // displays the popup context top_menu to either delete or resend measurement
         registerForContextMenu(mGestureListView);
+
     }
 
     @Override
@@ -58,6 +63,7 @@ public class GestureListActivity extends Activity {
                    super.onResume();
         setContentView(R.layout.gestures_list);
         Log.d(TAG, getApplicationInfo().dataDir);
+
 
   //openOptionsMenu();
 
