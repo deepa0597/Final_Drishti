@@ -35,26 +35,22 @@ import android.widget.Toast;
 
 
 
-public class PhoneBook extends Activity {
+public class NumberPhoneBook extends Activity {
     Button btnMic;
     EditText load;
     LinearLayout nextCancel;
     Button cancel,next;
     EditText etName;
+    String nameIntent;
+    EditText etMobile;
     TextToSpeech tts;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_phone_book);
-        etName = (EditText) findViewById(R.id.et_name);
-        btnMic = (Button)findViewById(R.id.btnMic);
-        btnMic.setVisibility(View.VISIBLE);
-        nextCancel = (LinearLayout)findViewById(R.id.layoutcancelNext);
-        cancel = (Button)findViewById(R.id.btnCancelName);
-        next = (Button)findViewById(R.id.btnNextAct);
-        tts = new TextToSpeech(PhoneBook.this, new TextToSpeech.OnInitListener() {
+        setContentView(R.layout.activity_number_phone_book);
+        tts = new TextToSpeech(NumberPhoneBook.this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int i) {
                 if(i!= TextToSpeech.ERROR)
@@ -63,37 +59,43 @@ public class PhoneBook extends Activity {
                 }
             }
         });
-
-        cancel.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v)
-            {
-                tts.speak("CLEAR NAME ",TextToSpeech.QUEUE_FLUSH,null);
-                return false;
-            }
-        });
+        btnMic = (Button)findViewById(R.id.btnMic);
+        btnMic.setVisibility(View.VISIBLE);
+        nextCancel = (LinearLayout)findViewById(R.id.layoutcancelNext);
+        cancel = (Button)findViewById(R.id.btnCancelName);
+        next = (Button)findViewById(R.id.btnNextAct);
         next.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                tts.speak("NEXT ",TextToSpeech.QUEUE_FLUSH,null);
+                tts.speak("NEXT ", TextToSpeech.QUEUE_FLUSH,null);
+                return false;
+            }
+        });
+        cancel.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                tts.speak("CLEAR NUMBER ", TextToSpeech.QUEUE_FLUSH,null);
+                return false;
+            }
+        });
+        btnMic.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                tts.speak("PRESS TO SPEAK ", TextToSpeech.QUEUE_FLUSH,null);
                 return false;
             }
         });
 
-        tts.speak("Press at the bottom to speak name", TextToSpeech.QUEUE_FLUSH,null);
-
         // Creating a button click listener for the "Add Contact" button
+        etMobile = (EditText) findViewById(R.id.et_mobile_phone);
         OnClickListener addClickListener = new OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // Getting reference to Name EditText
-
+                etName = (EditText) findViewById(R.id.et_name);
 
                 // Getting reference to Mobile EditText
-                EditText etMobile = (EditText) findViewById(R.id.et_mobile_phone);
-
-                // Getting reference to HomePhone EditText
 
 
                 ArrayList<ContentProviderOperation> ops =
@@ -127,6 +129,7 @@ public class PhoneBook extends Activity {
 
 
 
+
                 try{
                     // Executing all the insert operations as a single database transaction
                     getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
@@ -152,35 +155,13 @@ public class PhoneBook extends Activity {
             }
         };
 
-        // Getting reference to "Add Contact" button
-/*        final Button btnAdd = (Button) findViewById(R.id.btn_add);
 
-        // Getting reference to "Contacts List" button
-        Button btnContacts = (Button) findViewById(R.id.btn_contacts);
-
-        Button btnCall = (Button) findViewById(R.id.btn_call);
 
         // Setting click listener for the "Add Contact" button
-        btnAdd.setOnClickListener(addClickListener);
+        next.setOnClickListener(addClickListener);
 
         // Setting click listener for the "List Contacts" button
-        btnContacts.setOnClickListener(contactsClickListener);
 
-        btnCall.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(PhoneBook.this,PhoneCall.class);
-                startActivity(i);
-                finish();
-            }
-        });*/
-        btnMic.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                tts.speak("PRESS TO SPEAK ",TextToSpeech.QUEUE_FLUSH,null);
-                return false;
-            }
-        });
 
         btnMic.setOnClickListener(new OnClickListener() {
             @Override
@@ -193,8 +174,9 @@ public class PhoneBook extends Activity {
                     startActivityForResult(intent, 10);
 
                     nextCancel.setVisibility(View.VISIBLE);
+
                 } else {
-                    Toast.makeText(PhoneBook.this, "Your Device Don't Support Speech Input", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NumberPhoneBook.this, "Your Device Don't Support Speech Input", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -202,24 +184,22 @@ public class PhoneBook extends Activity {
         cancel.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                etName.getText().clear();
+                etMobile.getText().clear();
             }
         });
         next.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(PhoneBook.this,NumberPhoneBook.class);
-                i.putExtra("Name",etName.getText().toString());
+                Intent i = new Intent(NumberPhoneBook.this,SavePhone.class);
+                tts.speak("Save "+nameIntent + " as " +etMobile.getText().toString(),TextToSpeech.QUEUE_FLUSH,null );
+                nameIntent = getIntent().getStringExtra("Name");
+                Toast.makeText(NumberPhoneBook.this, nameIntent, Toast.LENGTH_SHORT).show();
+                i.putExtra("Phone",etMobile.getText().toString());
+                i.putExtra("Name2",nameIntent);
                 startActivity(i);
                 finish();
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        tts.speak("Press at the bottom to speak name", TextToSpeech.QUEUE_FLUSH,null);
     }
 
     @Override

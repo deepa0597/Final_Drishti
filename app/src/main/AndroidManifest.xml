@@ -21,18 +21,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".CurrentDateTime" />
         <activity android:name=".LocationTracker" />
-        <activity android:name=".GestureActivity"></activity>
+        <activity android:name=".GestureActivity" />
         <activity
             android:name=".SaveGestureActivity"
             android:label="@string/save_gesture" />
         <activity
             android:name=".GestureListActivity"
-            android:label="@string/app_name">
-
-        </activity>
+            android:label="@string/app_name" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".UserActivity" />
         <activity android:name=".ProfileActivity" />
@@ -51,7 +49,7 @@
         </receiver>
 
         <activity android:name=".GestureActivity1" />
-        <activity android:name=".SecurityCalling"></activity>
+        <activity android:name=".SecurityCalling" />
         <activity android:name=".GestureListActivity1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,6 +57,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".NumberPhoneBook" />
+        <activity android:name=".SavePhone"></activity>
     </application>
 
 </manifest>

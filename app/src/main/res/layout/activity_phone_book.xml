@@ -1,22 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent" >
 
     <EditText
         android:id="@+id/et_name"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:inputType="text"
+        android:layout_weight="1"
+        android:textSize="30dp"
         android:hint="@string/hnt_et_name" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/layoutcancelNext"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/btnCancelName"
+            android:text="CANCEL"
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/btnNextAct"
+            android:text="NEXT"
+            android:layout_weight="1"/>
 
+    </LinearLayout>
+<!--
     <EditText
         android:id="@+id/et_mobile_phone"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/et_name"
         android:inputType="phone"
+        android:visibility="invisible"
         android:hint="@string/hnt_et_mobile_phone" />
 
     <EditText
@@ -25,6 +49,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/et_mobile_phone"
         android:inputType="phone"
+
+        android:visibility="invisible"
         android:hint="@string/hnt_et_home_phone" />
 
     <EditText
@@ -33,6 +59,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/et_home_phone"
         android:inputType="textEmailAddress"
+
+        android:visibility="invisible"
         android:hint="@string/hnt_et_work_email" />
 
     <EditText
@@ -41,6 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/et_work_email"
         android:inputType="textEmailAddress"
+        android:visibility="invisible"
         android:hint="@string/hnt_et_home_email" />
 
     <Button
@@ -48,18 +77,34 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/et_home_email"
+        android:visibility="invisible"
         android:text="@string/str_btn_add" />
 
     <Button
         android:id="@+id/btn_contacts"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_add"
+        android:visibility="invisible"
         android:text="@string/str_btn_contacts" />
     <Button
         android:id="@+id/btn_call"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_contacts"
-        android:text="make a call"/>
-</RelativeLayout>
+        android:visibility="invisible"
+        android:text="make a call"/>-->
+
+
+    <Button
+        android:id="@+id/btnMic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="1"
+
+        android:text="Speak name" />
+
+
+</LinearLayout>

@@ -88,13 +88,13 @@ public class FirstScreen extends Fragment implements View.OnClickListener {
                 startActivity(intent1);
                 break;
             case R.id.three:
-                tts.speak("Track Your Location",TextToSpeech.QUEUE_FLUSH,null);
+                tts.speak("Track Your Location. Press at the bottom to share location.",TextToSpeech.QUEUE_FLUSH,null);
                 Intent intent2 = new Intent(getActivity(),LocationTracker.class);
                 startActivity(intent2);
                 break;
             case R.id.four:
+                tts.speak("Phone Book opened. Press at the bottom to speak name. Long press on any button to know its function.", TextToSpeech.QUEUE_FLUSH,null);
 
-                tts.speak("Phone Book",TextToSpeech.QUEUE_FLUSH,null);
                 Intent intent3 = new Intent(getActivity(),PhoneBook.class);
                 startActivity(intent3);
                 break;
