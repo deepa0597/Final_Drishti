@@ -10,6 +10,7 @@ import android.gesture.GestureLibrary;
 import android.gesture.GestureOverlayView;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.TestLooperManager;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
@@ -21,7 +22,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SaveGestureActivity extends Activity {
+import java.util.Locale;
+
+public class SaveGestureActivity extends Activity implements TextToSpeech.OnInitListener {
     private GestureLibrary gLib;
     private static final String TAG = "SaveGestureActivity";
     private boolean mGestureDrawn;                      //tc
@@ -36,6 +39,7 @@ public class SaveGestureActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.save_gesture);
+        tts = new TextToSpeech(SaveGestureActivity.this, this);
         btnSaveGesture = (Button)findViewById(R.id.btnSave);
        // btnDeleteGesture = (Button)findViewById(R.id.btnDelete);
 
@@ -158,6 +162,7 @@ public class SaveGestureActivity extends Activity {
                 nameField.setText("Camera");
                 mGesturename = nameField.getText().toString();
                 saveGesture();
+                tts.speak("Saved Gesture",TextToSpeech.QUEUE_FLUSH,null);
                 Intent intent = new Intent(SaveGestureActivity.this, GestureActivity.class);
                 startActivity(intent);
                /* if (!nameField.getText().toString().matches("Camera")) {
@@ -173,6 +178,7 @@ public class SaveGestureActivity extends Activity {
         namePopup.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                tts.speak("Gesture Cancelled", TextToSpeech.QUEUE_FLUSH,null);
                 mGesturename = "";
                 return;
             }
@@ -222,5 +228,19 @@ public class SaveGestureActivity extends Activity {
         gestures.removeAllOnGestureListeners();
         gestures.addOnGestureListener(mGestureListener);
         resetEverything();
+    }
+
+    public void onInit(int initStatus) {
+
+        //check for successful instantiation
+        if (initStatus == TextToSpeech.SUCCESS) {
+            if(tts.isLanguageAvailable(Locale.US)==TextToSpeech.LANG_AVAILABLE)
+                tts.setLanguage(Locale.US);
+
+            tts.speak("Save Password", TextToSpeech.QUEUE_FLUSH, null);
+        }
+        else if (initStatus == TextToSpeech.ERROR) {
+            Toast.makeText(this, "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();
+        }
     }
 }

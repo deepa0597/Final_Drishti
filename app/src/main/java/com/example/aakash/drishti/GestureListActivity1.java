@@ -8,6 +8,7 @@ import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,12 +21,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Set;
 
 /**
  * Created by manan on 2/1/2015.
  */
-public class GestureListActivity1 extends Activity {
+public class GestureListActivity1 extends Activity implements TextToSpeech.OnInitListener {
     private static final String TAG = "GestureListActivity";
     private String mCurrentGestureNaam,navuNaam;
     private ListView mGestureListView;
@@ -34,12 +36,17 @@ public class GestureListActivity1 extends Activity {
     private GestureLibrary gLib;
     //private ImageView mMenuItemView;
     Button btnCancel;
+    TextToSpeech tts;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gesture_list1);
+
+        tts = new TextToSpeech(this, this);
+
+
         btnCancel=(Button)findViewById(R.id.cancelBtn);
         Log.d(TAG, getApplicationInfo().dataDir);
 
@@ -54,6 +61,10 @@ public class GestureListActivity1 extends Activity {
             Intent i =new Intent(GestureListActivity1.this,GestureActivity.class);
             startActivity(i);
             finish();
+        }
+        else
+        {
+            tts.speak("Click anywhere on the screen to save password!", TextToSpeech.QUEUE_FLUSH, null);
         }
         mGestureAdapter = new GestureAdapter(mGestureList, GestureListActivity1.this);
         mGestureListView.setLongClickable(true);
@@ -116,7 +127,8 @@ public class GestureListActivity1 extends Activity {
         popup.show();
     }
 
-    public void addButtonClick(View view){
+    public void addButtonClick(View view)
+    { tts.speak("Draw a password and click on top to save ", TextToSpeech.QUEUE_FLUSH, null);
         Intent saveGesture = new Intent(GestureListActivity1.this, SaveGestureActivity.class);
         startActivity(saveGesture);
         finish();
@@ -185,5 +197,19 @@ public class GestureListActivity1 extends Activity {
     }
     private void showToast(String string){
         Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onInit(int initStatus) {
+
+        //check for successful instantiation
+        if (initStatus == TextToSpeech.SUCCESS) {
+            if(tts.isLanguageAvailable(Locale.US)==TextToSpeech.LANG_AVAILABLE)
+                tts.setLanguage(Locale.US);
+
+            tts.speak("Welcome to Drishti!", TextToSpeech.QUEUE_FLUSH, null);
+        }
+        else if (initStatus == TextToSpeech.ERROR) {
+            Toast.makeText(this, "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();
+        }
     }
 }

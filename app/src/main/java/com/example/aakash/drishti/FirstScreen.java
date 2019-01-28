@@ -14,7 +14,7 @@ import android.widget.Button;
 import java.util.Locale;
 
 
-public class FirstScreen extends Fragment implements View.OnClickListener {
+public class FirstScreen extends Fragment implements View.OnClickListener, View.OnLongClickListener {
     private View mView;
     Button button1, button2, button3,button4;
 
@@ -61,14 +61,37 @@ public class FirstScreen extends Fragment implements View.OnClickListener {
         });
         button1=(Button)mView.findViewById(R.id.one);
         button1.setOnClickListener(this);
+        button1.setOnLongClickListener(this);
         button2=(Button)mView.findViewById(R.id.two);
         button2.setOnClickListener(this);
+        button2.setOnLongClickListener(this);
         button3=(Button)mView.findViewById(R.id.three);
         button3.setOnClickListener(this);
+        button3.setOnLongClickListener(this);
         button4=(Button)mView.findViewById(R.id.four);
         button4.setOnClickListener(this);
+        button4.setOnLongClickListener(this);
 
         return mView;
+    }
+    public boolean onLongClick(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.one:
+                tts.speak("Security Calling",TextToSpeech.QUEUE_FLUSH,null);
+                break;
+            case R.id.two:
+                tts.speak("Current Date and Time",TextToSpeech.QUEUE_FLUSH,null);
+                break;
+            case R.id.three:
+                tts.speak("Location Tracker.",TextToSpeech.QUEUE_FLUSH,null);
+                break;
+            case R.id.four:
+                tts.speak(" Save contact to Phone Book", TextToSpeech.QUEUE_FLUSH,null);
+                break;
+        }
+        return false;
     }
 
 
@@ -83,7 +106,7 @@ public class FirstScreen extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.two:
-                tts.speak("Current Date and Time",TextToSpeech.QUEUE_FLUSH,null);
+                tts.speak("Press at the top to know Date. Press at the bottom to know time.",TextToSpeech.QUEUE_FLUSH,null);
                 Intent intent1 = new Intent(getActivity(),CurrentDateTime.class);
                 startActivity(intent1);
                 break;

@@ -81,7 +81,7 @@ public class NumberPhoneBook extends Activity {
         btnMic.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                tts.speak("PRESS TO SPEAK ", TextToSpeech.QUEUE_FLUSH,null);
+                tts.speak("PRESS TO SPEAK NUMBER", TextToSpeech.QUEUE_FLUSH,null);
                 return false;
             }
         });
