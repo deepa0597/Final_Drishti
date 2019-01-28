@@ -29,6 +29,7 @@ public class GestureActivity extends Activity implements TextToSpeech.OnInitList
     Button btnGesture;
     TextToSpeech tts;
     String change;
+    GestureOverlayView gestureSpace;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,14 @@ public class GestureActivity extends Activity implements TextToSpeech.OnInitList
         tts = new TextToSpeech(GestureActivity.this, this);
         application = (TextView) findViewById(R.id.application);
         btnGesture = (Button) findViewById(R.id.btngesture);
-
+        gestureSpace = (GestureOverlayView)findViewById(R.id.gestures);
+        gestureSpace.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                tts.speak("Security Calling",TextToSpeech.QUEUE_FLUSH,null);
+                return false;
+            }
+        });
         btnGesture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +111,7 @@ public class GestureActivity extends Activity implements TextToSpeech.OnInitList
             if(tts.isLanguageAvailable(Locale.US)==TextToSpeech.LANG_AVAILABLE)
                 tts.setLanguage(Locale.US);
 
-            tts.speak(" Draw your unlocking pattern", TextToSpeech.QUEUE_FLUSH, null);
+            tts.speak(" Draw your unlocking pattern. Long Press on screen for emergency calling .", TextToSpeech.QUEUE_FLUSH, null);
         }
         else if (initStatus == TextToSpeech.ERROR) {
             Toast.makeText(this, "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();
