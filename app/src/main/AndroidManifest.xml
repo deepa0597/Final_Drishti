@@ -51,14 +51,29 @@
         <activity android:name=".GestureActivity1" />
         <activity android:name=".SecurityCalling" />
         <activity android:name=".GestureListActivity1">
+
+        </activity>
+        <activity android:name=".NumberPhoneBook" />
+        <activity android:name=".SavePhone" />
+        <activity android:name=".KeyboardTest">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NumberPhoneBook" />
-        <activity android:name=".SavePhone"></activity>
+
+        <service android:name=".MyInputMethodService"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+
+            <meta-data android:name="android.view.im"
+                android:resource="@xml/method" />
+
+        </service>
     </application>
 
 </manifest>
