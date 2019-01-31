@@ -8,6 +8,7 @@ import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,18 +21,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Set;
 
 /**
  * Created by manan on 2/1/2015.
  */
-public class GestureListActivity extends Activity {
+public class GestureListActivity extends Activity implements TextToSpeech.OnInitListener {
     private static final String TAG = "GestureListActivity";
     private String mCurrentGestureNaam,navuNaam;
     private ListView mGestureListView;
     private static ArrayList<GestureHolder> mGestureList;
     private GestureAdapter mGestureAdapter;
     private GestureLibrary gLib;
+    TextToSpeech tts;
     //private ImageView mMenuItemView;
     Button btnCancel;
 
@@ -41,6 +44,7 @@ public class GestureListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gestures_list);
         btnCancel=(Button)findViewById(R.id.cancelBtn);
+        tts = new TextToSpeech(GestureListActivity.this, this);
         Log.d(TAG, getApplicationInfo().dataDir);
 
         openOptionsMenu();
@@ -179,5 +183,19 @@ public class GestureListActivity extends Activity {
     }
     private void showToast(String string){
         Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onInit(int initStatus) {
+
+        //check for successful instantiation
+        if (initStatus == TextToSpeech.SUCCESS) {
+            if(tts.isLanguageAvailable(Locale.US)==TextToSpeech.LANG_AVAILABLE)
+                tts.setLanguage(Locale.US);
+
+            tts.speak("  Press on the left side to add new password . Press on right side to cancel.", TextToSpeech.QUEUE_FLUSH, null);
+        }
+        else if (initStatus == TextToSpeech.ERROR) {
+            Toast.makeText(this, "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();
+        }
     }
 }

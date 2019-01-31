@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
@@ -24,7 +25,13 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".CurrentDateTime" />
         <activity android:name=".LocationTracker" />
-        <activity android:name=".GestureActivity" />
+        <activity android:name=".GestureActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".SaveGestureActivity"
             android:label="@string/save_gesture" />
@@ -50,30 +57,28 @@
 
         <activity android:name=".GestureActivity1" />
         <activity android:name=".SecurityCalling" />
-        <activity android:name=".GestureListActivity1">
-
-        </activity>
+        <activity android:name=".GestureListActivity1"></activity>
         <activity android:name=".NumberPhoneBook" />
         <activity android:name=".SavePhone" />
-        <activity android:name=".KeyboardTest">
+        <activity android:name=".KeyboardTest"></activity>
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <service android:name=".MyInputMethodService"
+        <service
+            android:name=".MyInputMethodService"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
             </intent-filter>
 
-            <meta-data android:name="android.view.im"
+            <meta-data
+                android:name="android.view.im"
                 android:resource="@xml/method" />
 
         </service>
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="ocr" />
+
+
     </application>
 
 </manifest>

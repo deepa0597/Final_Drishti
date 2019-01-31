@@ -50,6 +50,7 @@ public class GestureActivity extends Activity implements TextToSpeech.OnInitList
         btnGesture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tts.speak("Draw old password to proceed",TextToSpeech.QUEUE_FLUSH,null);
                 Intent intent = new Intent(GestureActivity.this, GestureActivity1.class);
                 startActivity(intent);
             }
@@ -95,7 +96,7 @@ public class GestureActivity extends Activity implements TextToSpeech.OnInitList
                     }
                     else
                     {
-                        Toast.makeText(GestureActivity.this,"Incorrect Password",Toast.LENGTH_LONG).show();
+                        tts.speak("Incorrect Password.", TextToSpeech.QUEUE_FLUSH, null);
                     }
 
 
@@ -111,7 +112,7 @@ public class GestureActivity extends Activity implements TextToSpeech.OnInitList
             if(tts.isLanguageAvailable(Locale.US)==TextToSpeech.LANG_AVAILABLE)
                 tts.setLanguage(Locale.US);
 
-            tts.speak(" Draw your unlocking pattern. Long Press on screen for emergency calling .", TextToSpeech.QUEUE_FLUSH, null);
+            tts.speak(" Draw your unlocking pattern. Long Press on screen for emergency calling . Press on page top to change password.", TextToSpeech.QUEUE_FLUSH, null);
         }
         else if (initStatus == TextToSpeech.ERROR) {
             Toast.makeText(this, "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();

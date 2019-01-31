@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.os.TestLooperManager;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -50,6 +51,7 @@ public class SaveGestureActivity extends Activity implements TextToSpeech.OnInit
                 if(mGestureDrawn){
                     getName();
                 } else{
+                    tts.speak(getString(R.string.no_gesture),TextToSpeech.QUEUE_FLUSH,null);
                     showToast(getString(R.string.no_gesture));
                 }
 
@@ -150,11 +152,46 @@ public class SaveGestureActivity extends Activity implements TextToSpeech.OnInit
     {
         AlertDialog.Builder namePopup = new AlertDialog.Builder(this);
         namePopup.setTitle(getString(R.string.enter_name));
-        //namePopup.setMessage(R.string.enter_name);
-
-
+        /*LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.alertdialog_custom_view, null);
+        namePopup.setView(dialogView);
+        Button add = (Button)dialogView.findViewById(R.id.dialog_positive_btn);
+        Button cancel = (Button)dialogView.findViewById(R.id.dialog_negative_btn);*/
         final TextView nameField = new TextView(this);
         namePopup.setView(nameField);
+      /*  add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                nameField.setText("Camera");
+                mGesturename = nameField.getText().toString();
+                saveGesture();
+                tts.speak("Saved Gesture",TextToSpeech.QUEUE_FLUSH,null);
+                Intent intent = new Intent(SaveGestureActivity.this, GestureActivity.class);
+                startActivity(intent);
+               *//* if (!nameField.getText().toString().matches("Camera")) {
+                    mGesturename = nameField.getText().toString();
+                    saveGesture();
+                } else {
+                    getName();  //TODO : set name field with old name string user added
+                    showToast(getString(R.string.invalid_name));
+                }*//*
+                //return;
+                tts.speak("Password saved ",TextToSpeech.QUEUE_FLUSH,null);
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tts.speak("Gesture Cancelled", TextToSpeech.QUEUE_FLUSH,null);
+                mGesturename = "";
+                return;
+            }
+        });
+        AlertDialog alertDialog = namePopup.create();
+        alertDialog.show();*/
+        //namePopup.setMessage(R.string.enter_name);
+
         namePopup.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -165,14 +202,15 @@ public class SaveGestureActivity extends Activity implements TextToSpeech.OnInit
                 tts.speak("Saved Gesture",TextToSpeech.QUEUE_FLUSH,null);
                 Intent intent = new Intent(SaveGestureActivity.this, GestureActivity.class);
                 startActivity(intent);
-               /* if (!nameField.getText().toString().matches("Camera")) {
+                if (!nameField.getText().toString().matches("Camera")) {
                     mGesturename = nameField.getText().toString();
                     saveGesture();
                 } else {
                     getName();  //TODO : set name field with old name string user added
                     showToast(getString(R.string.invalid_name));
-                }*/
+                }
                 //return;
+                tts.speak("Password saved ",TextToSpeech.QUEUE_FLUSH,null);
             }
         });
         namePopup.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -237,7 +275,7 @@ public class SaveGestureActivity extends Activity implements TextToSpeech.OnInit
             if(tts.isLanguageAvailable(Locale.US)==TextToSpeech.LANG_AVAILABLE)
                 tts.setLanguage(Locale.US);
 
-            tts.speak("Save Password", TextToSpeech.QUEUE_FLUSH, null);
+            tts.speak("Draw new password and click on top to save", TextToSpeech.QUEUE_FLUSH, null);
         }
         else if (initStatus == TextToSpeech.ERROR) {
             Toast.makeText(this, "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();

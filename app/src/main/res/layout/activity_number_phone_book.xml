@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/et_name"
         android:textSize="30dp"
-        android:inputType="phone"
+
         android:layout_weight="1"
         android:hint="@string/hnt_et_mobile_phone" />
     <LinearLayout

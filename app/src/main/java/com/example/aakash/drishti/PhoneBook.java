@@ -208,6 +208,7 @@ public class PhoneBook extends Activity {
         next.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                tts.speak("Enter mobile number",TextToSpeech.QUEUE_FLUSH,null);
                 Intent i = new Intent(PhoneBook.this,NumberPhoneBook.class);
                 i.putExtra("Name",etName.getText().toString());
                 startActivity(i);

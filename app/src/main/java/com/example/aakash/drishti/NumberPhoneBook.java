@@ -190,8 +190,8 @@ public class NumberPhoneBook extends Activity {
         next.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                tts.speak("Click anywhere on screen to save "+getIntent().getStringExtra("Name")+" as "+ etMobile.getText().toString(),TextToSpeech.QUEUE_FLUSH,null);
                 Intent i = new Intent(NumberPhoneBook.this,SavePhone.class);
-                tts.speak("Save "+nameIntent + " as " +etMobile.getText().toString(),TextToSpeech.QUEUE_FLUSH,null );
                 nameIntent = getIntent().getStringExtra("Name");
                 Toast.makeText(NumberPhoneBook.this, nameIntent, Toast.LENGTH_SHORT).show();
                 i.putExtra("Phone",etMobile.getText().toString());
@@ -206,7 +206,7 @@ public class NumberPhoneBook extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        load = (EditText) findViewById(R.id.et_name);
+        load = (EditText) findViewById(R.id.et_mobile_phone);
 
 
 
